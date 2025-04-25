@@ -1,30 +1,35 @@
 const express = require('express');
-// on importe express
+
+
+require ('./Models/Associations');
 
 require('dotenv').config();
 // on importe le fichier .env
 
 const app = express();
 // on declare l'application express
+app.use(express.json());
+
 const port = 3000;
 // on declare le port
-
-app.use(express.json());
-// on declare le middleware pour parser le json
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 // on declare la route racine
 
-const stagiaireRoute = require('./Routes/StagiaireRoute');
-app.use('/stagiaires', stagiaireRoute);
+const InstrumentRoute = require('./Routes/InstrumentRoute');
+app.use('/instrument', InstrumentRoute);
 
-const formateurRoutes = require('./Routes/FormateurRoute');
-app.use('/formateur', stagiaireRoute);
 
-const formationRoutes = require('./Routes/FormationRoute');
-app.use('/formation', stagiaireRoute);
+const ConcertRoute = require('./Routes/ConcertRoute');
+app.use('/concert', ConcertRoute);
+
+const MusicienRoute = require('./Routes/MusicienRoute');
+app.use('/musicien', MusicienRoute);
+
+const FicheRoute = require('./Routes/FicheRoute');
+app.use('/fiche', FicheRoute);
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Route non trouvé' });
@@ -33,5 +38,5 @@ app.use((req, res) => {
 
 
 app.listen(process.env.PORT, () => {
-    console.log(`✅ Votre serveur est lancé sur http://127.0.0.1:${process.env.PORT}`);
+    console.log(` Votre serveur est lancé sur http://127.0.0.1:${process.env.PORT}`);
   });
